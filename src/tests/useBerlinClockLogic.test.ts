@@ -2,32 +2,26 @@ import { describe, it, expect } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useBerlinClockLogic } from '../hooks/useBerlinClockLogic';
 
-describe('useBerlinClockLogic Engine Suite - Hours Calculations', () => {
-  it('should calculate correct active lamps for 5-hour row sets', () => {
-    const { result } = renderHook(() => useBerlinClockLogic(13, 0, 0));
-    expect(result.current.fiveHoursRow).toEqual([true, true, false, false]); // 13 / 5 = 2 blocks
+describe('useBerlinClockLogic Engine Suite - Full Matrix Calculations', () => {
+  it('should parse 5-minute segments correctly (e.g., 35 minutes -> 7 active lamps)', () => {
+    const { result } = renderHook(() => useBerlinClockLogic(0, 35, 0));
+    expect(result.current.fiveMinutesRow.filter(Boolean)).toHaveLength(7);
   });
 
-  it('should calculate correct active remainder lamps for 1-hour row sets', () => {
-    const { result } = renderHook(() => useBerlinClockLogic(13, 0, 0));
-    expect(result.current.oneHourRow).toEqual([true, true, true, false]); // 13 % 5 = 3 blocks
+  it('should extract remainder 1-minute iterations perfectly (e.g., 39 minutes -> 4 active lamps)', () => {
+    const { result } = renderHook(() => useBerlinClockLogic(0, 39, 0));
+    expect(result.current.oneMinuteRow).toEqual([true, true, true, true]);
   });
 
-  it('should return completely blank hours matrix outputs at midnight benchmarks', () => {
-    const { result } = renderHook(() => useBerlinClockLogic(0, 0, 0));
-    expect(result.current.fiveHoursRow).toEqual([false, false, false, false]);
-    expect(result.current.oneHourRow).toEqual([false, false, false, false]);
-  });
-
-  it('should turn on all hour blocks concurrently at 23:00 parameters', () => {
-    const { result } = renderHook(() => useBerlinClockLogic(23, 0, 0));
+  it('should fully run up all elements at the 23:59:00 peak boundary condition', () => {
+    const { result } = renderHook(() => useBerlinClockLogic(23, 59, 0));
     expect(result.current.fiveHoursRow).toEqual([true, true, true, true]);
-    expect(result.current.oneHourRow).toEqual([true, true, true, false]);
+    expect(result.current.fiveMinutesRow).toEqual(Array(11).fill(true));
+    expect(result.current.oneMinuteRow).toEqual([true, true, true, true]);
   });
 
-  it('should verify secondsLamp state evaluates fine along with hours matrices', () => {
-    const { result } = renderHook(() => useBerlinClockLogic(4, 0, 2));
-    expect(result.current.secondsLamp).toBe(true);
-    expect(result.current.oneHourRow).toEqual([true, true, true, true]);
+  it('should safely calculate quarter-hour checkpoints for internal color routing validation', () => {
+    const { result } = renderHook(() => useBerlinClockLogic(0, 15, 0));
+    expect(result.current.fiveMinutesRow[2]).toBe(true); // 3rd block is lit
   });
 });

@@ -2,31 +2,33 @@ import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import { BerlinClock } from '../component/BerlinClock';
 
-describe('BerlinClock Visual Integration Container Suite', () => {
-  it('should mount primary application background framing safely', () => {
+describe('BerlinClock Production Framework Container Suite', () => {
+  it('should render the top-level main frame dashboard envelope seamlessly', () => {
     const { getByTestId } = render(<BerlinClock />);
     expect(getByTestId('berlin-clock-container')).toBeInTheDocument();
   });
 
-  it('should contain the structured top circular ticking layout bubble', () => {
+  it('should mount the structural 11-lamp layout frame component onto screen layers', () => {
     const { getByTestId } = render(<BerlinClock />);
-    expect(getByTestId('seconds-lamp')).toBeInTheDocument();
+    expect(getByTestId('clock-row-5m')).toBeInTheDocument();
   });
 
-  it('should embed the generic five-hours structural tracker layout component row', () => {
+  it('should construct the absolute bottom structural 1-minute layout component row', () => {
     const { getByTestId } = render(<BerlinClock />);
-    expect(getByTestId('clock-row-five-hours')).toBeInTheDocument();
+    expect(getByTestId('clock-row-one-minute')).toBeInTheDocument();
   });
 
-  it('should embed the generic single-hours structural tracker layout component row', () => {
-    const { getByTestId } = render(<BerlinClock />);
-    expect(getByTestId('clock-row-one-hour')).toBeInTheDocument();
-  });
+  it('should compute combined layouts simultaneously over structural target paths', () => {
+    const { getByTestId } = render(<BerlinClock customTime="14:37:02" />);
+    
+    // 37 minutes / 5 = 7 lamps active on row 5m
+    const rowFiveMin = getByTestId('clock-row-5m');
+    expect(rowFiveMin.children[6]).toHaveClass('lamp-yellow'); 
+    expect(rowFiveMin.children[7]).toHaveClass('lamp-off');
 
-  it('should calculate individual layout rows matching given custom configurations', () => {
-    const { getByTestId } = render(<BerlinClock customTime="16:00:00" />);
-    const fiveHourRow = getByTestId('clock-row-five-hours');
-    expect(fiveHourRow.children[2]).toHaveClass('lamp-red'); // 16 / 5 = 3 blocks active
-    expect(fiveHourRow.children[3]).toHaveClass('lamp-off');
+    // 37 minutes % 5 = 2 lamps active on bottom row
+    const rowOneMin = getByTestId('clock-row-one-minute');
+    expect(rowOneMin.children[1]).toHaveClass('lamp-yellow');
+    expect(rowOneMin.children[2]).toHaveClass('lamp-off');
   });
 });

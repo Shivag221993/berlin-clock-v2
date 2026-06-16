@@ -7,7 +7,7 @@ import { MinutesFiveRow } from './MinutesFiveRow';
 import './BerlinClock.css';
 
 interface BerlinClockProps {
-  customTime?: string; // Kept for testing override capabilities
+  customTime?: string; 
 }
 
 export function BerlinClock({ customTime }: BerlinClockProps) {
@@ -34,12 +34,12 @@ export function BerlinClock({ customTime }: BerlinClockProps) {
 
   return (
     <div className="berlin-clock-main" data-testid="berlin-clock-container">
-      {/* Live Actual Digital Time Display Box */}
+      {}
       <div className="actual-time-display" data-testid="actual-digital-time">
         {formatDigit(parsedTime.hours)}:{formatDigit(parsedTime.minutes)}:{formatDigit(parsedTime.seconds)}
       </div>
 
-      {/* Top Ticking Circle */}
+      {}
       <div 
         data-testid="seconds-lamp"
         className={`seconds-lamp ${clockState.secondsLamp ? 'lamp-yellow' : 'lamp-off'}`} 

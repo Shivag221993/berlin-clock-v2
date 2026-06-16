@@ -26,12 +26,12 @@ describe('BerlinClock Complete App - Reset Action Control Suite', () => {
     const formPanel = getByTestId('time-input-form');
     const resetBtn = getByTestId('time-reset-button');
 
-    // Lock time string matrix state values
+    
     fireEvent.change(textInput, { target: { value: '20:20:20' } });
     fireEvent.submit(formPanel);
     expect(getByTestId('actual-digital-time').textContent).toBe('20:20:20');
 
-    // Trigger explicit interface button resets
+    
     fireEvent.click(resetBtn);
     expect(getByTestId('actual-digital-time').textContent).not.toBe('20:20:20');
   });
@@ -45,11 +45,11 @@ describe('BerlinClock Complete App - Reset Action Control Suite', () => {
     fireEvent.change(textInput, { target: { value: '23:59:59' } });
     fireEvent.submit(formPanel);
     
-    // Check that the clock was frozen into max lighting indicators
+    
     expect(getByTestId('clock-row-five-hours').children[3]).toHaveClass('lamp-red');
 
     fireEvent.click(resetBtn);
-    // Matrix calculations drop out of freeze frame back into active validation streams
+    
     expect(getByTestId('berlin-clock-container')).toBeInTheDocument();
   });
 
@@ -58,7 +58,7 @@ describe('BerlinClock Complete App - Reset Action Control Suite', () => {
     const resetBtn = getByTestId('time-reset-button');
 
     fireEvent.click(resetBtn);
-    // Explicit prop declarations maintain overrides since they bypass internal tracking states
+    
     expect(getByTestId('actual-digital-time').textContent).toBe('01:02:03');
   });
 });

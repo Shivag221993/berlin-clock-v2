@@ -22,6 +22,6 @@ describe('useBerlinClockLogic Engine Suite - Full Matrix Calculations', () => {
 
   it('should safely calculate quarter-hour checkpoints for internal color routing validation', () => {
     const { result } = renderHook(() => useBerlinClockLogic(0, 15, 0));
-    expect(result.current.fiveMinutesRow[2]).toBe(true); // 3rd block is lit
+    expect(result.current.fiveMinutesRow[2]).toBe(true); 
   });
 });

@@ -8,18 +8,18 @@ export const useBerlinClockLogic = (hours: number, minutes: number, seconds: num
 
   const secondsLamp = seconds % 2 === 0;
 
-  // Hours Logic calculations
+  
   const activeFiveHours = Math.floor(hours / 5);
   for (let i = 0; i < activeFiveHours; i++) fiveHoursRow[i] = true;
 
   const activeOneHour = hours % 5;
   for (let i = 0; i < activeOneHour; i++) oneHourRow[i] = true;
 
-  // Compute 5-minute blocks (11 elements)
+  
   const activeFiveMinutes = Math.floor(minutes / 5);
   for (let i = 0; i < activeFiveMinutes; i++) fiveMinutesRow[i] = true;
 
-  // Compute 1-minute blocks (4 elements)
+  
   const activeOneMinute = minutes % 5;
   for (let i = 0; i < activeOneMinute; i++) oneMinuteRow[i] = true;
 

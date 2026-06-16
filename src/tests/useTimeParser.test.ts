@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react';
 import { useTimeParser } from '../hooks/useTimeParser';
 
 describe('useTimeParser Ingestion and Validation Hook', () => {
-  const mockSystemDate = new Date(2026, 5, 16, 14, 30, 45); // Locked fixed date
+  const mockSystemDate = new Date(2026, 5, 16, 14, 30, 45); 
 
   it('should extract correct structural objects from valid custom parameter strings', () => {
     const { result } = renderHook(() => useTimeParser(mockSystemDate, '22:15:36'));

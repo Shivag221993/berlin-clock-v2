@@ -33,7 +33,7 @@ describe('useCurrentTime Lifecycle Ticker Hook', () => {
     const { result } = renderHook(() => useCurrentTime());
     const snapshotMs = result.current.getTime();
     
-    vi.advanceTimersByTime(10); // Not enough to trigger a 1s re-render
+    vi.advanceTimersByTime(10); 
     expect(result.current.getTime()).toBe(snapshotMs);
   });
 });

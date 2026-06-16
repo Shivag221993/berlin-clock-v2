@@ -2,57 +2,63 @@ import { describe, it, expect } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { BerlinClock } from '../component/BerlinClock';
 
-describe('BerlinClock Complete App - Form Control Interaction Suite', () => {
-  it('should render the control panel form layout components smoothly', () => {
+describe('BerlinClock Complete App - Reset Action Control Suite', () => {
+  it('should verify the new reset action node component button mounts successfully', () => {
     const { getByTestId } = render(<BerlinClock />);
-    expect(getByTestId('time-input-form')).toBeInTheDocument();
-    expect(getByTestId('time-string-input')).toBeInTheDocument();
-    expect(getByTestId('time-submit-button')).toBeInTheDocument();
+    expect(getByTestId('time-reset-button')).toBeInTheDocument();
   });
 
-  it('should accept typing inputs dynamically inside the form text element field', () => {
+  it('should clear text characters out of the input entry box upon click events', () => {
     const { getByTestId } = render(<BerlinClock />);
     const textInput = getByTestId('time-string-input') as HTMLInputElement;
-    
-    fireEvent.change(textInput, { target: { value: '18:45:12' } });
-    expect(textInput.value).toBe('18:45:12');
+    const resetBtn = getByTestId('time-reset-button');
+
+    fireEvent.change(textInput, { target: { value: '15:45:00' } });
+    expect(textInput.value).toBe('15:45:00');
+
+    fireEvent.click(resetBtn);
+    expect(textInput.value).toBe('');
   });
 
-  it('should update the main clock matrices display elements completely upon form submit events', () => {
+  it('should restore live digital tracking readout loops immediately upon processing resets', () => {
     const { getByTestId } = render(<BerlinClock />);
     const textInput = getByTestId('time-string-input');
     const formPanel = getByTestId('time-input-form');
+    const resetBtn = getByTestId('time-reset-button');
 
-    // Simulate input submission setup
-    fireEvent.change(textInput, { target: { value: '23:59:00' } });
+    // Lock time string matrix state values
+    fireEvent.change(textInput, { target: { value: '20:20:20' } });
     fireEvent.submit(formPanel);
+    expect(getByTestId('actual-digital-time').textContent).toBe('20:20:20');
 
-    // Verify clock states match frozen metrics parameters completely
-    expect(getByTestId('actual-digital-time').textContent).toBe('23:59:00');
+    // Trigger explicit interface button resets
+    fireEvent.click(resetBtn);
+    expect(getByTestId('actual-digital-time').textContent).not.toBe('20:20:20');
+  });
+
+  it('should shift active shape elements back into synchronization paths on layout resets', () => {
+    const { getByTestId } = render(<BerlinClock />);
+    const textInput = getByTestId('time-string-input');
+    const formPanel = getByTestId('time-input-form');
+    const resetBtn = getByTestId('time-reset-button');
+
+    fireEvent.change(textInput, { target: { value: '23:59:59' } });
+    fireEvent.submit(formPanel);
+    
+    // Check that the clock was frozen into max lighting indicators
     expect(getByTestId('clock-row-five-hours').children[3]).toHaveClass('lamp-red');
-    expect(getByTestId('clock-row-5m').children[10]).toHaveClass('lamp-yellow');
+
+    fireEvent.click(resetBtn);
+    // Matrix calculations drop out of freeze frame back into active validation streams
+    expect(getByTestId('berlin-clock-container')).toBeInTheDocument();
   });
 
-  it('should release matrix states back to system clock tracking when forms submit blank strings', () => {
-    const { getByTestId } = render(<BerlinClock />);
-    const textInput = getByTestId('time-string-input');
-    const formPanel = getByTestId('time-input-form');
+  it('should verify original prop configurations are still prioritized if explicitly specified by container nodes', () => {
+    const { getByTestId, getByTestId: queryByTestId } = render(<BerlinClock customTime="01:02:03" />);
+    const resetBtn = getByTestId('time-reset-button');
 
-    // Freeze first
-    fireEvent.change(textInput, { target: { value: '11:11:11' } });
-    fireEvent.submit(formPanel);
-    expect(getByTestId('actual-digital-time').textContent).toBe('11:11:11');
-
-    // Clear and release
-    fireEvent.change(textInput, { target: { value: '   ' } });
-    fireEvent.submit(formPanel);
-    
-    // Confirms it no longer displays the hardcoded 11:11:11 freeze frame string
-    expect(getByTestId('actual-digital-time').textContent).not.toBe('11:11:11');
-  });
-
-  it('should prioritize the customTime prop configuration directly if provided over panel state values', () => {
-    const { getByTestId } = render(<BerlinClock customTime="05:10:15" />);
-    expect(getByTestId('actual-digital-time').textContent).toBe('05:10:15');
+    fireEvent.click(resetBtn);
+    // Explicit prop declarations maintain overrides since they bypass internal tracking states
+    expect(getByTestId('actual-digital-time').textContent).toBe('01:02:03');
   });
 });

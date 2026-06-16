@@ -64,13 +64,13 @@
 /* Form Panel Control Dashboard Styles */
 .control-input-form {
   display: flex;
+  flex-direction: column;
   width: 100%;
   gap: 10px;
   margin-top: 10px;
 }
 
 .time-text-input {
-  flex: 2;
   background-color: #222;
   border: 1px solid #444;
   border-radius: 6px;
@@ -85,19 +85,39 @@
   border-color: #00ff66;
 }
 
-.time-submit-btn {
+.button-group {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.time-submit-btn, .time-reset-btn {
   flex: 1;
-  background-color: #333;
   color: #fff;
-  border: 1px solid #555;
   border-radius: 6px;
   font-size: 0.9rem;
   font-weight: bold;
+  padding: 8px 0;
   cursor: pointer;
-  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.time-submit-btn {
+  background-color: #333;
+  border: 1px solid #555;
 }
 
 .time-submit-btn:hover {
   background-color: #444;
   border-color: #00ff66;
+}
+
+.time-reset-btn {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+}
+
+.time-reset-btn:hover {
+  background-color: #333;
+  border-color: #ff3b30;
 }

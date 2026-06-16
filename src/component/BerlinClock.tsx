@@ -15,7 +15,6 @@ export function BerlinClock({ customTime }: BerlinClockProps) {
   const [submittedTime, setSubmittedTime] = useState<string | undefined>(undefined);
 
   const systemTime = useCurrentTime();
-  // If customTime prop is provided (from testing frameworks), prioritize it over input form state
   const targetTimeStr = customTime !== undefined ? customTime : submittedTime;
   
   const parsedTime = useTimeParser(systemTime, targetTimeStr);
@@ -26,6 +25,11 @@ export function BerlinClock({ customTime }: BerlinClockProps) {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmittedTime(inputValue.trim() === '' ? undefined : inputValue);
+  };
+
+  const handleReset = () => {
+    setInputValue('');
+    setSubmittedTime(undefined);
   };
 
   return (
@@ -53,15 +57,25 @@ export function BerlinClock({ customTime }: BerlinClockProps) {
       <form onSubmit={handleFormSubmit} className="control-input-form" data-testid="time-input-form">
         <input 
           type="text"
-          placeholder="HH:MM:SS (e.g. 14:30:15)"
+          placeholder="HH:MM:SS"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           className="time-text-input"
           data-testid="time-string-input"
         />
-        <button type="submit" className="time-submit-btn" data-testid="time-submit-button">
-          Set Time
-        </button>
+        <div className="button-group">
+          <button type="submit" className="time-submit-btn" data-testid="time-submit-button">
+            Set
+          </button>
+          <button 
+            type="button" 
+            onClick={handleReset} 
+            className="time-reset-btn" 
+            data-testid="time-reset-button"
+          >
+            Reset
+          </button>
+        </div>
       </form>
     </div>
   );

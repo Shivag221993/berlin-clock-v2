@@ -14,8 +14,16 @@ export function BerlinClock({ customTime }: BerlinClockProps) {
   const parsedTime = useTimeParser(systemTime, customTime);
   const clockState = useBerlinClockLogic(parsedTime.hours, parsedTime.minutes, parsedTime.seconds);
 
+  // Helper utility to pad single digits with leading zeros for the customer UI display
+  const formatDigit = (num: number) => num.toString().padStart(2, '0');
+
   return (
     <div className="berlin-clock-main" data-testid="berlin-clock-container">
+      {/* Live Actual Digital Time Display Box */}
+      <div className="actual-time-display" data-testid="actual-digital-time">
+        {formatDigit(parsedTime.hours)}:{formatDigit(parsedTime.minutes)}:{formatDigit(parsedTime.seconds)}
+      </div>
+
       {/* Top Ticking Circle */}
       <div 
         data-testid="seconds-lamp"

@@ -8,6 +8,22 @@
   border-radius: 16px;
   max-width: 360px;
   margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Actual Digital Display Box HUD Styling */
+.actual-time-display {
+  background-color: #0b0b0b;
+  color: #00ff66;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  letter-spacing: 2px;
+  box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.2), 0 0 10px rgba(0, 255, 10green, 0.1);
+  margin-bottom: 5px;
 }
 
 .seconds-lamp {
@@ -32,7 +48,6 @@
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Color Modifier Utilities */
 .lamp-yellow {
   background-color: #ffd700;
   box-shadow: 0 0 15px #ffd700;

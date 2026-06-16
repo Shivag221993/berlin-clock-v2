@@ -54,7 +54,7 @@ describe('BerlinClock Complete App - Reset Action Control Suite', () => {
   });
 
   it('should verify original prop configurations are still prioritized if explicitly specified by container nodes', () => {
-    const { getByTestId, getByTestId: queryByTestId } = render(<BerlinClock customTime="01:02:03" />);
+    const { getByTestId } = render(<BerlinClock customTime="01:02:03" />);
     const resetBtn = getByTestId('time-reset-button');
 
     fireEvent.click(resetBtn);

@@ -34,26 +34,22 @@ export function BerlinClock({ customTime }: BerlinClockProps) {
 
   return (
     <div className="berlin-clock-main" data-testid="berlin-clock-container">
-      {}
+
       <div className="actual-time-display" data-testid="actual-digital-time">
         {formatDigit(parsedTime.hours)}:{formatDigit(parsedTime.minutes)}:{formatDigit(parsedTime.seconds)}
       </div>
 
-      {}
       <div 
         data-testid="seconds-lamp"
         className={`seconds-lamp ${clockState.secondsLamp ? 'lamp-yellow' : 'lamp-off'}`} 
       />
       
-      {/* Hours Tracking Blocks */}
       <ClockRow rowState={clockState.fiveHoursRow} activeColorClass="lamp-red" rowId="five-hours" />
       <ClockRow rowState={clockState.oneHourRow} activeColorClass="lamp-red" rowId="one-hour" />
 
-      {/* Minutes Tracking Blocks */}
       <MinutesFiveRow rowState={clockState.fiveMinutesRow} />
       <ClockRow rowState={clockState.oneMinuteRow} activeColorClass="lamp-yellow" rowId="one-minute" />
 
-      {/* Interactive Custom Time Control Input Console Panel */}
       <form onSubmit={handleFormSubmit} className="control-input-form" data-testid="time-input-form">
         <input 
           type="text"

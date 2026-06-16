@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useCurrentTime } from '../hooks/useCurrentTime';
 import { useTimeParser } from '../hooks/useTimeParser';
 import { useBerlinClockLogic } from '../hooks/useBerlinClockLogic';
@@ -6,16 +7,26 @@ import { MinutesFiveRow } from './MinutesFiveRow';
 import './BerlinClock.css';
 
 interface BerlinClockProps {
-  customTime?: string;
+  customTime?: string; // Kept for testing override capabilities
 }
 
 export function BerlinClock({ customTime }: BerlinClockProps) {
+  const [inputValue, setInputValue] = useState('');
+  const [submittedTime, setSubmittedTime] = useState<string | undefined>(undefined);
+
   const systemTime = useCurrentTime();
-  const parsedTime = useTimeParser(systemTime, customTime);
+  // If customTime prop is provided (from testing frameworks), prioritize it over input form state
+  const targetTimeStr = customTime !== undefined ? customTime : submittedTime;
+  
+  const parsedTime = useTimeParser(systemTime, targetTimeStr);
   const clockState = useBerlinClockLogic(parsedTime.hours, parsedTime.minutes, parsedTime.seconds);
 
-  // Helper utility to pad single digits with leading zeros for the customer UI display
   const formatDigit = (num: number) => num.toString().padStart(2, '0');
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmittedTime(inputValue.trim() === '' ? undefined : inputValue);
+  };
 
   return (
     <div className="berlin-clock-main" data-testid="berlin-clock-container">
@@ -37,6 +48,21 @@ export function BerlinClock({ customTime }: BerlinClockProps) {
       {/* Minutes Tracking Blocks */}
       <MinutesFiveRow rowState={clockState.fiveMinutesRow} />
       <ClockRow rowState={clockState.oneMinuteRow} activeColorClass="lamp-yellow" rowId="one-minute" />
+
+      {/* Interactive Custom Time Control Input Console Panel */}
+      <form onSubmit={handleFormSubmit} className="control-input-form" data-testid="time-input-form">
+        <input 
+          type="text"
+          placeholder="HH:MM:SS (e.g. 14:30:15)"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="time-text-input"
+          data-testid="time-string-input"
+        />
+        <button type="submit" className="time-submit-btn" data-testid="time-submit-button">
+          Set Time
+        </button>
+      </form>
     </div>
   );
 }

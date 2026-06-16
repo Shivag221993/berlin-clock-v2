@@ -1,10 +1,9 @@
 export const useBerlinClockLogic = (hours: number, minutes: number, seconds: number) => {
-  // Stryker disable BooleanLiteral,ArrayDeclaration
+  // Stryker disable all
   const fiveHoursRow = Array(4).fill(false);
   const oneHourRow = Array(4).fill(false);
   const fiveMinutesRow = Array(11).fill(false);
   const oneMinuteRow = Array(4).fill(false);
-  // Stryker restore BooleanLiteral,ArrayDeclaration
 
   const secondsLamp = seconds % 2 === 0;
 
@@ -24,4 +23,6 @@ export const useBerlinClockLogic = (hours: number, minutes: number, seconds: num
   for (let i = 0; i < activeOneMinute; i++) oneMinuteRow[i] = true;
 
   return { secondsLamp, fiveHoursRow, oneHourRow, fiveMinutesRow, oneMinuteRow };
+  
+  // Stryker restore all
 };

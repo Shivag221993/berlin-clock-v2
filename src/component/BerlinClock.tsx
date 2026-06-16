@@ -1,6 +1,7 @@
 import { useCurrentTime } from '../hooks/useCurrentTime';
 import { useTimeParser } from '../hooks/useTimeParser';
 import { useBerlinClockLogic } from '../hooks/useBerlinClockLogic';
+import { ClockRow } from './ClockRow';
 import './BerlinClock.css';
 
 interface BerlinClockProps {
@@ -14,11 +15,14 @@ export function BerlinClock({ customTime }: BerlinClockProps) {
 
   return (
     <div className="berlin-clock-main" data-testid="berlin-clock-container">
-      {/* Renders exclusively the top seconds feature lamp */}
       <div 
         data-testid="seconds-lamp"
         className={`seconds-lamp ${clockState.secondsLamp ? 'lamp-yellow' : 'lamp-off'}`} 
       />
+      
+      {/* Render both hours tracking row components */}
+      <ClockRow rowState={clockState.fiveHoursRow} activeColorClass="lamp-red" rowId="five-hours" />
+      <ClockRow rowState={clockState.oneHourRow} activeColorClass="lamp-red" rowId="one-hour" />
     </div>
   );
 }
